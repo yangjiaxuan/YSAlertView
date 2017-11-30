@@ -8,9 +8,12 @@
 
 #import "YSAlertWindow.h"
 
+#define kAlertWindowShowColor [UIColor colorWithWhite:0.3 alpha:0.3]
+#define kAlertWindowHideColor [UIColor colorWithWhite:0.3 alpha:0]
+
 @interface YSAlertWindow()
 
-@property (nonatomic ,strong, nonnull)YSAlertViewManager *alertViewManager;
+@property (nonatomic ,strong, nullable)YSAlertViewManager *alertViewManager;
 
 @end
 static YSAlertWindow *__alertWindow__ = nil;
@@ -26,7 +29,7 @@ static YSAlertWindow *__alertWindow__ = nil;
 
 - (instancetype)init{
     if (self = [super init]) {
-        self.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.3];
+        self.backgroundColor = kAlertWindowShowColor;
     }
     return self;
 }
@@ -54,15 +57,21 @@ static YSAlertWindow *__alertWindow__ = nil;
 + (void)show{
     YSAlertWindow *alertWindow = [YSAlertWindow shareAlertWindow];
     [alertWindow makeKeyWindow];
-    alertWindow.hidden = NO;
+    alertWindow.hidden          = NO;
+    alertWindow.backgroundColor = kAlertWindowHideColor;
+    [UIView animateWithDuration:alertWindow.alertViewManager.alertView.animatedDuration animations:^{
+        alertWindow.backgroundColor = kAlertWindowShowColor;
+    }];
 }
 
-+ (void)hide{
-    YSAlertWindow *alertWindow = [YSAlertWindow shareAlertWindow];
-    for (UIView *subView in alertWindow.subviews) {
-        [subView removeFromSuperview];
-    }
-    [alertWindow setHidden:true];
++ (void)hideAll{
+    
+    [YSAlertWindow hideComplete:^{
+        YSAlertWindow *alertWindow = [YSAlertWindow shareAlertWindow];
+        for (UIView *subView in alertWindow.subviews) {
+            [subView removeFromSuperview];
+        }
+    }];
 }
 
 + (void)hideView:(UIView *)view{
@@ -72,15 +81,35 @@ static YSAlertWindow *__alertWindow__ = nil;
     YSAlertWindow *alertWindow = [YSAlertWindow shareAlertWindow];
     for (UIView *viewP in alertWindow.subviews) {
         if (view == viewP) {
-            [viewP removeFromSuperview];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(alertWindow.alertViewManager.alertView.animatedDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [viewP removeFromSuperview];
+            });
             break;
         }
     }
     if (alertWindow.subviews.count == 0) {
-        [alertWindow setHidden:true];
+        [self hideAll];
     }
 }
 
++ (void)hideComplete:(dispatch_block_t)complete{
+    
+    YSAlertWindow *alertWindow = [YSAlertWindow shareAlertWindow];
+    alertWindow.backgroundColor = kAlertWindowShowColor;
+    [UIView animateWithDuration:alertWindow.alertViewManager.alertView.animatedDuration animations:^{
+        alertWindow.backgroundColor = kAlertWindowHideColor;
+    }completion:^(BOOL finished) {
+        if (complete) {
+            complete();
+        }
+        [alertWindow setHidden:true];
+        alertWindow.alertViewManager = nil;
+    }];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.alertViewManager ys_dismiss];
+}
 
 @end
 

@@ -58,7 +58,7 @@
 - (void)setupData{}
 
 - (void)setUI{
-    self.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.3];
+    self.backgroundColor = [UIColor clearColor];
     _contentView         = [[UIView alloc] init];
     _contentView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_contentView];
@@ -106,22 +106,10 @@
     }
 }
 
-- (void)ys_dismissAnimated:(BOOL)animated completeHander:(dispatch_block_t _Nullable )completeHander{
-    
-    if (animated) {
-        [UIView animateWithDuration:self.animatedDuration animations:^{
-            self.alpha = 0.2;
-        }completion:^(BOOL finished) {
-            
-            if (completeHander) {
-                completeHander();
-            }
-        }];
-    }else{
-        if (completeHander) {
-            completeHander();
-        }
-    }
+- (void)ys_dismiss{
+    [UIView animateWithDuration:self.animatedDuration animations:^{
+        self.alpha = 0.2;
+    }];
 }
 
 

@@ -42,7 +42,6 @@
     if ([self.alertView respondsToSelector:@selector(ys_setAlertActions:)]) {
         [self.alertView ys_setAlertActions:alertActions];
     }
-    
 }
 
 - (void)ys_show{
@@ -62,13 +61,9 @@
 
 - (void)ys_dismiss{
     
-    if ([self.alertView respondsToSelector:@selector(ys_dismissCompleteHander:)]) {
-        [self.alertView ys_dismissCompleteHander:^{
-            [YSAlertWindow hide];
-        }];
-    }
-    else{
-        [YSAlertWindow hide];
+    [YSAlertWindow hideAll];
+    if ([self.alertView respondsToSelector:@selector(ys_dismiss)]) {
+        [self.alertView ys_dismiss];
     }
 }
 

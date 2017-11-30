@@ -45,7 +45,7 @@
     
     NSInteger contentViewX = (kYS_ScreenW - _contentViewW)*0.5;
     
-    NSInteger messageMaxY = CGRectGetMaxY(self.messageLabel.frame);
+    CGFloat messageMaxY   = CGRectGetMaxY(self.messageLabel.superview.frame);
     NSInteger actionW     = _contentViewW;
     NSInteger actionH     = _actionItemH;
     CGFloat   actionHA    = 0.5 + actionH;
@@ -129,7 +129,7 @@
     }];
 }
 
-- (void)ys_dismissCompleteHander:(dispatch_block_t)completeHander{
+- (void)ys_dismiss{
     
     NSInteger contentY = CGRectGetMinY(self.contentView.frame);
     NSInteger contentH = self.contentView.frame.size.height;
@@ -139,10 +139,6 @@
     [UIView animateWithDuration:self.animatedDuration animations:^{
         self.contentView.frame = CGRectMake(contentX, contentY+kYS_ScreenH, _contentViewW, contentH);
         _cancleView.frame      = CGRectMake(contentX, cancleY +kYS_ScreenH, _contentViewW, _actionItemH);
-    }completion:^(BOOL finished) {
-        if (completeHander) {
-            completeHander();
-        }
     }];
 }
 

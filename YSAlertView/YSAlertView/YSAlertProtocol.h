@@ -13,11 +13,13 @@
 @class YSAlertAction;
 @protocol YSAlertViewDelegate
 
+@property (nonatomic , assign)CGFloat animatedDuration;
+
 + (UIView<YSAlertViewDelegate>* _Nullable)ys_alertViewWithTitle:(NSString * _Nullable)title message:(NSString * _Nullable)message;
 
 - (void)ys_setAlertActions:(NSArray <YSAlertAction *> * _Nullable)alertActions;
 
-- (void)ys_dismissCompleteHander:(dispatch_block_t _Nullable )completeHander;
+- (void)ys_dismiss;
 
 
 @optional

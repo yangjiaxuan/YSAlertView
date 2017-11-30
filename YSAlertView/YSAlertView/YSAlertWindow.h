@@ -15,6 +15,6 @@
 
 + (void)addViewWithAlertViewManager:(YSAlertViewManager * _Nonnull)viewManager;
 + (void)show;
-+ (void)hide;
++ (void)hideAll;
 
 @end
