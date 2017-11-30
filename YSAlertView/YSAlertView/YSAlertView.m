@@ -112,7 +112,6 @@
     }];
 }
 
-
 - (UIButton *)createAlertActionViewWithFrame:(CGRect)frame title:(NSString *)title index:(NSInteger)index actionHandle:(void(^)(UIButton *))actionHandle{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = frame;

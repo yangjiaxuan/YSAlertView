@@ -108,7 +108,11 @@ static YSAlertWindow *__alertWindow__ = nil;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self.alertViewManager ys_dismiss];
+    if ([self.alertViewManager.alertView respondsToSelector:@selector(ys_canDismissWithClickBlank)]) {
+        if ([self.alertViewManager.alertView ys_canDismissWithClickBlank]) {
+            [self.alertViewManager ys_dismiss];
+        }
+    }
 }
 
 @end

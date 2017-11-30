@@ -25,6 +25,7 @@
 @optional
 
 - (void)ys_showAnimated:(BOOL)animated  completeHander:(dispatch_block_t _Nullable )completeHander;
+- (BOOL)ys_canDismissWithClickBlank;
 
 
 @end

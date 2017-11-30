@@ -142,5 +142,8 @@
     }];
 }
 
+- (BOOL)ys_canDismissWithClickBlank{
+    return YES;
+}
 
 @end
