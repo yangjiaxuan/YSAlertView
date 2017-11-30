@@ -29,6 +29,7 @@
 @property (nonatomic , strong, readonly, nonnull)UILabel *messageLabel;
 @property (nonatomic , strong, readonly, nonnull)UIView  *contentView;
 
+@property (nonatomic ,strong, nonnull)UIColor *separateLineColor;
 @property (nonatomic ,strong, nonnull)UIColor *canleBtnColor;
 @property (nonatomic ,strong, nonnull)UIColor *otherBtnColor;
 

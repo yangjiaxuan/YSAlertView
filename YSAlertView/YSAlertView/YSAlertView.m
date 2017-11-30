@@ -51,6 +51,7 @@
     _messageColor     = [UIColor grayColor];
     _canleBtnColor    = [UIColor redColor];
     _otherBtnColor    = [UIColor blueColor];
+    _separateLineColor= [UIColor colorWithWhite:0.9 alpha:1];
     [self setupData];
 }
 
@@ -130,6 +131,7 @@
     button.tag   = 1000+index;
     [button setTitle:title forState:UIControlStateNormal];
     [button setBackgroundImage:[UIImage ys_imageWithColor:[UIColor whiteColor] size:frame.size] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage ys_imageWithColor:_separateLineColor] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(actionHandle:) forControlEvents:UIControlEventTouchUpInside];
     button.clickHandle = actionHandle;
     return button;

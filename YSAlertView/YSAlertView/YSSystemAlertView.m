@@ -33,14 +33,14 @@
 
 - (void)setupUI{
     _actionBgView = [[UIView alloc] init];
-    _actionBgView.backgroundColor = [UIColor lightGrayColor];
     [self.contentView addSubview:_actionBgView];
 }
 
 - (void)didMoveToSuperview{
     self.contentView.layer.cornerRadius  = kSystemAlertContentCornerRadius;
     self.contentView.layer.masksToBounds = true;
-    
+    _actionBgView.backgroundColor        = self.separateLineColor;
+
     [_cancleView setTitleColor:self.canleBtnColor forState:UIControlStateNormal];
     for (UIButton *actionView in _otherActionsViews) {
         [actionView setTitleColor:self.otherBtnColor forState:UIControlStateNormal];
@@ -59,10 +59,10 @@
     }
     else if(count == 2){
         actionW  = _contentViewW/2;
-        actionWA = actionW + 0.5;
+        actionWA = actionW + kYS_SpareatLineH;
     }
     else{
-        actionHA = actionH + 0.5;
+        actionHA = actionH + kYS_SpareatLineH;
     }
     NSMutableArray *otherActionViews = [NSMutableArray array];
     UIButton *actionView = nil;
@@ -83,7 +83,7 @@
     }
     _actionBgView.frame = CGRectMake(0, messageMaxY, _contentViewW, CGRectGetMaxY(actionView.frame));
     _otherActionsViews = [otherActionViews copy];
-    [self resetContentViewFrameWithRealHeight:CGRectGetMaxY(_actionBgView.frame)+kSystemAlertContentCornerRadius];
+    [self resetContentViewFrameWithRealHeight:CGRectGetMaxY(_actionBgView.frame)];
 }
 
 - (void)resetTitleLabel:(UILabel *)titleLabel messageLabel:(UILabel *)messageLabel{
