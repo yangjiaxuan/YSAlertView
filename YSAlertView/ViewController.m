@@ -25,12 +25,17 @@
 //    UIAlertControllerStyleAlert
 //    UIAlertControllerStyleActionSheet
     UIAlertAction *action_01 = [UIAlertAction actionWithTitle:@"01" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
     }];
     UIAlertAction *action_02 = [UIAlertAction actionWithTitle:@"01" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self alertTest_01];
     }];
-    UIAlertAction *action_03 = [UIAlertAction actionWithTitle:@"01" style:UIAlertActionStyleDefault handler:nil];
-    UIAlertAction *action_04 = [UIAlertAction actionWithTitle:@"01" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *action_03 = [UIAlertAction actionWithTitle:@"01" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self alertTest_02];
+    }];
+    UIAlertAction *action_04 = [UIAlertAction actionWithTitle:@"01" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self alertTest_03];
+    }];
     
     [alertVC addAction:action_01];
     [alertVC addAction:action_02];
@@ -62,12 +67,30 @@
     YSAlertViewManager *alertManager = [YSAlertViewManager ys_alertViewManagerWithAlertViewClass:YSSystemAlertView.class title:@"提示" message:@"啦啦啦啦啦啦" alertActions:@[ alertActionSure, alertAction_01, alertAction_02,alertActionCancle]];
     
     [alertManager ys_show];
-    
 }
 
 - (void)alertTest_02{
+    YSAlertAction *alertActionCancle = [YSAlertAction actionWithTitle:@"取消" style:YSAlertActionTypeCancle handler:^(YSAlertAction * _Nullable action) {
+        NSLog(@"取消");
+    }];
     
+    YSAlertAction *alertActionSure = [YSAlertAction actionWithTitle:@"01" style:YSAlertActionTypeDefault handler:^(YSAlertAction * _Nullable action) {
+        NSLog(@"确定");
+    }];
     
+    YSAlertViewManager *alertManager = [YSAlertViewManager ys_alertViewManagerWithAlertViewClass:YSSystemAlertView.class title:@"提示" message:@"啦啦啦啦啦啦" alertActions:@[alertActionCancle, alertActionSure]];
+    
+    [alertManager ys_show];
+    
+}
+
+- (void)alertTest_03{
+    YSAlertAction *alertActionCancle = [YSAlertAction actionWithTitle:@"取消" style:YSAlertActionTypeCancle handler:^(YSAlertAction * _Nullable action) {
+        NSLog(@"取消");
+    }];
+    
+    YSAlertViewManager *alertManager = [YSAlertViewManager ys_alertViewManagerWithAlertViewClass:YSSystemAlertView.class title:@"提示" message:@"啦啦啦啦啦啦" alertActions:@[alertActionCancle]];
+    [alertManager ys_show];
 }
 
 

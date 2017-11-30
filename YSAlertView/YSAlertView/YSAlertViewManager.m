@@ -33,15 +33,12 @@
 - (void)ys_setAlertActions:(NSArray <YSAlertAction *> * _Nullable)alertActions;
 {
     for (YSAlertAction *action in alertActions) {
-        if (action.style == YSAlertActionTypeCancle) {
-            void(^ cancleActionP)(YSAlertAction *action) = [action.handle copy];
-            void(^ cancleAction)(YSAlertAction *action) = ^(YSAlertAction *action){
-                [YSAlertWindow hide];
-                cancleActionP(action);
-            };
-            action.handle = [cancleAction copy];
-            break;
-        }
+        void(^ actionHandleP)(YSAlertAction *action) = [action.handle copy];
+        void(^ actionHandle)(YSAlertAction *action) = ^(YSAlertAction *action){
+            [YSAlertWindow hide];
+            actionHandleP(action);
+        };
+        action.handle = [actionHandle copy];
     }
     if ([self.alertView respondsToSelector:@selector(ys_setAlertActions:)]) {
         [self.alertView ys_setAlertActions:alertActions];
