@@ -16,7 +16,6 @@
     UIButton *_cancleView;
     NSArray  *_otherActionsViews;
     NSInteger _contentViewW;
-    NSInteger _contentViewMinH;
     NSInteger _actionItemH;
     
     UIView   *_actionBgView;
@@ -26,7 +25,6 @@
 
 - (void)setupData{
     _contentViewW    = kYS_ScreenW * 0.7;
-    _contentViewMinH = _contentViewW*0.5;
     _actionItemH     = kYS_ScreenW * 0.12;
 
 }

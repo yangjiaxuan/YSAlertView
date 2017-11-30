@@ -7,15 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YSAlertViewManager.h"
 
 @interface YSAlertWindow : UIWindow
 
-+ (instancetype)shareAlertWindow;
++ (instancetype _Nonnull)shareAlertWindow;
 
-+ (void)addView:(UIView *)view;
++ (void)addViewWithAlertViewManager:(YSAlertViewManager * _Nonnull)viewManager;
 + (void)show;
-
-+ (void)hideView:(UIView *)view;
 + (void)hide;
 
 @end

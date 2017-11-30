@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, YSAlertActionType){
 #define kYS_ScreenH ([UIScreen mainScreen].bounds.size.height)
 #define kYS_SpareatLineH 0.5f
 
-#define YS_WeakObject(obj)   __weak typeof(obj) weak##obj = obj
-#define YS_StrongObject(obj) __strong typeof(obj) obj = weak##obj
+#define YS_WeakObject(obj)   __weak typeof(obj) weak##obj = self
+#define YS_StrongObject(obj) __strong typeof(obj) self = weak##obj
 
 

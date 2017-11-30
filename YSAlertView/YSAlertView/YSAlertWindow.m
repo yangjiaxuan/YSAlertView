@@ -8,6 +8,11 @@
 
 #import "YSAlertWindow.h"
 
+@interface YSAlertWindow()
+
+@property (nonatomic ,strong, nonnull)YSAlertViewManager *alertViewManager;
+
+@end
 static YSAlertWindow *__alertWindow__ = nil;
 @implementation YSAlertWindow
 
@@ -37,12 +42,13 @@ static YSAlertWindow *__alertWindow__ = nil;
     return __alertWindow__;
 }
 
-+ (void)addView:(UIView *)view{
-    if (!view) {
++ (void)addViewWithAlertViewManager:(YSAlertViewManager *)viewManager{
+    if (!viewManager.alertView) {
         return;
     }
     YSAlertWindow *alertWindow = [YSAlertWindow shareAlertWindow];
-    [alertWindow addSubview:view];
+    alertWindow.alertViewManager = viewManager;
+    [alertWindow addSubview:viewManager.alertView];
 }
 
 + (void)show{
@@ -75,9 +81,6 @@ static YSAlertWindow *__alertWindow__ = nil;
     }
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    
-}
 
 @end
 

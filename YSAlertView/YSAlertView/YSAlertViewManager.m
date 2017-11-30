@@ -11,9 +11,6 @@
 #import "YSAlertView.h"
 
 @interface YSAlertViewManager()
-
-@property (nonatomic ,weak, nullable)UIView <YSAlertViewDelegate> *alertView;
-
 @end
 
 @implementation YSAlertViewManager
@@ -24,19 +21,21 @@
     if ([clazz respondsToSelector:@selector(ys_alertViewWithTitle:message:)]) {
         alertView = [clazz ys_alertViewWithTitle:title message:message];
     }
-    alertViewManager.alertView = alertView;
+    alertViewManager->_alertView = alertView;
     [alertViewManager ys_setAlertActions:alertActions];
-    [YSAlertWindow addView:alertView];
+    [YSAlertWindow addViewWithAlertViewManager:alertViewManager];
     return alertViewManager;
 }
 
 - (void)ys_setAlertActions:(NSArray <YSAlertAction *> * _Nullable)alertActions;
 {
     for (YSAlertAction *action in alertActions) {
+        YS_WeakObject(self);
         void(^ actionHandleP)(YSAlertAction *action) = [action.handle copy];
         void(^ actionHandle)(YSAlertAction *action) = ^(YSAlertAction *action){
-            [YSAlertWindow hide];
+            YS_StrongObject(self);
             actionHandleP(action);
+            [self ys_dismiss];
         };
         action.handle = [actionHandle copy];
     }
@@ -48,7 +47,6 @@
 
 - (void)ys_show{
     [self ys_showAnimated:false preHander:nil completeHander:nil];
-
 }
 
 - (void)ys_showAnimated:(BOOL)animated preHander:(void (^)(UIView<YSAlertViewDelegate> * _Nonnull))preHander completeHander:(dispatch_block_t)completeHander{
@@ -63,14 +61,14 @@
 }
 
 - (void)ys_dismiss{
-    [self ys_dismissAnimated:NO completeHander:nil];
-}
-
-- (void)ys_dismissAnimated:(BOOL)animated completeHander:(dispatch_block_t)completeHander{
     
-    [YSAlertWindow hideView:self.alertView];
-    if ([self.alertView respondsToSelector:@selector(ys_dismissAnimated:completeHander:)]) {
-        [self.alertView ys_dismissAnimated:animated completeHander:completeHander];
+    if ([self.alertView respondsToSelector:@selector(ys_dismissCompleteHander:)]) {
+        [self.alertView ys_dismissCompleteHander:^{
+            [YSAlertWindow hide];
+        }];
+    }
+    else{
+        [YSAlertWindow hide];
     }
 }
 

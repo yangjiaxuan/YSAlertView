@@ -17,8 +17,12 @@
 
 - (void)ys_setAlertActions:(NSArray <YSAlertAction *> * _Nullable)alertActions;
 
+- (void)ys_dismissCompleteHander:(dispatch_block_t _Nullable )completeHander;
+
+
+@optional
+
 - (void)ys_showAnimated:(BOOL)animated  completeHander:(dispatch_block_t _Nullable )completeHander;
 
-- (void)ys_dismissAnimated:(BOOL)animated completeHander:(dispatch_block_t _Nullable )completeHander;
 
 @end
