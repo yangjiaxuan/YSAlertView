@@ -109,5 +109,42 @@
 
 }
 
+- (void)ys_showAnimated:(BOOL)animated completeHander:(dispatch_block_t)completeHander{
+    NSInteger contentY = CGRectGetMinY(self.contentView.frame);
+    NSInteger contentH = self.contentView.frame.size.height;
+    NSInteger contentX = self.contentView.frame.origin.x;
+    
+    NSInteger cancleY  = _cancleView.frame.origin.y;
+    
+    self.contentView.frame = CGRectMake(contentX, contentY+kYS_ScreenH, _contentViewW, contentH);
+    _cancleView.frame      = CGRectMake(contentX, cancleY +kYS_ScreenH, _contentViewW, _actionItemH);
+    
+    [UIView animateWithDuration:self.animatedDuration animations:^{
+        self.contentView.frame = CGRectMake(contentX, contentY, _contentViewW, contentH);
+        _cancleView.frame      = CGRectMake(contentX, cancleY, _contentViewW, _actionItemH);
+    }completion:^(BOOL finished) {
+        if (completeHander) {
+            completeHander();
+        }
+    }];
+}
+
+- (void)ys_dismissCompleteHander:(dispatch_block_t)completeHander{
+    
+    NSInteger contentY = CGRectGetMinY(self.contentView.frame);
+    NSInteger contentH = self.contentView.frame.size.height;
+    NSInteger contentX = self.contentView.frame.origin.x;
+    
+    NSInteger cancleY  = _cancleView.frame.origin.y;
+    [UIView animateWithDuration:self.animatedDuration animations:^{
+        self.contentView.frame = CGRectMake(contentX, contentY+kYS_ScreenH, _contentViewW, contentH);
+        _cancleView.frame      = CGRectMake(contentX, cancleY +kYS_ScreenH, _contentViewW, _actionItemH);
+    }completion:^(BOOL finished) {
+        if (completeHander) {
+            completeHander();
+        }
+    }];
+}
+
 
 @end
